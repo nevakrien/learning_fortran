@@ -35,6 +35,14 @@ program test_blas
   call dgemm('N', 'N', m, n, k, alpha, A(1:2, 1:2), lda, B, ldb, beta, A(3:4, 3:4), ldc)
   call print_parameters('N', 'N', m, n, k, alpha, lda, ldb, beta, ldc)
 
+  print *, "Updating submatrix A(1:2, 3:4) in place using DGEMM"
+  call dgemm('N', 'N', m, n, k, alpha, A(1:2, 1:2), lda, B, ldb, beta, A(1:2, 3:4), ldc)
+  call print_parameters('N', 'N', m, n, k, alpha, lda, ldb, beta, ldc)
+
+  ! Perform matrix multiplication write to a diffrent UNUSED part of A
+  print *, "Updating submatrix A(3:4, 1:2) in place using DGEMM"
+  call dgemm('N', 'N', m, n, k, alpha, A(1:2, 1:2), lda, B, ldb, beta, A(3:4, 1:2), ldc)
+  call print_parameters('N', 'N', m, n, k, alpha, lda, ldb, beta, ldc)
 
   print *, "Updated Matrix A:"
   call print_matrix(A, 4, 4)
